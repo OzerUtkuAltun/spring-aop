@@ -49,11 +49,17 @@ public class DemoLoggingAspect {
      (*)  -> matches a method with one arg. of any type
      (..)  -> matches a method with 0 or more args of any type
 
+
+
+    NOTE: match any method in our dao package:
+
+    @Before("execution(* com.ozerutkualtun.aop.dao.*.*(..))")
+
    */
 
-
-    //@Before("execution(public void addAccount())") // içerideki expression = pointcut
-    @Before("execution(* addAccount(com.ozerutkualtun.aop.model.Account, ..))") // return type'ı ne olursa olsun ilk parametresi account olan addAccount metodundan önce çalışsın.
+    //   @Before("execution(public void addAccount())") // içerideki expression = pointcut
+    //   @Before("execution(* addAccount(com.ozerutkualtun.aop.model.Account, ..))") // return type'ı ne olursa olsun ilk parametresi account olan addAccount metodundan önce çalışsın.
+    @Before("execution(* com.ozerutkualtun.aop.dao.*.*(..))")
     public void beforeAddAccountAdvice() {
 
         System.out.println("\n>>>>>>>>>>>>>>>>>>>EXECUTING @Before advice");
