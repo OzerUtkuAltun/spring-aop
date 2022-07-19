@@ -40,10 +40,20 @@ public class DemoLoggingAspect {
      @Before(execution("public * processCreditCard*()"))
      @Before(execution("* processCreditCard*()")) -> modifier zaten optional
 
+
+     ---------------------------------------------------
+
+     PARAMETER PATTERN WILDCARDS
+
+     ()  -> matches a method with no args.
+     (*)  -> matches a method with one arg. of any type
+     (..)  -> matches a method with 0 or more args of any type
+
    */
 
 
-    @Before("execution(public void addAccount())") // içerideki expression = pointcut
+    //@Before("execution(public void addAccount())") // içerideki expression = pointcut
+    @Before("execution(* addAccount(com.ozerutkualtun.aop.model.Account, ..))") // return type'ı ne olursa olsun ilk parametresi account olan addAccount metodundan önce çalışsın.
     public void beforeAddAccountAdvice() {
 
         System.out.println("\n>>>>>>>>>>>>>>>>>>>EXECUTING @Before advice");
