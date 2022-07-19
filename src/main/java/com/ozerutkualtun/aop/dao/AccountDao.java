@@ -15,7 +15,11 @@ public class AccountDao {
         System.out.println(getClass() + ": DOING MY DB WORK -> ADDING AN ACCOUNT");
     }
 
-    public List<Account> findAccounts() {
+    public List<Account> findAccounts(boolean tripWire) throws RuntimeException {
+
+        if(tripWire) {
+            throw new RuntimeException("Exception thrown by AccountDao");
+        }
 
         List<Account> accounts = new ArrayList<>();
         accounts.add(new Account("Account1", "account1@mail.com"));

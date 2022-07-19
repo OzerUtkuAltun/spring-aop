@@ -3,6 +3,7 @@ package com.ozerutkualtun.aop.aspects;
 import com.ozerutkualtun.aop.model.Account;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.core.annotation.Order;
@@ -97,4 +98,14 @@ public class DemoLoggingAspect {
 
     }
 
+    @AfterThrowing(
+            pointcut = "com.ozerutkualtun.aop.aspects.AopExpressions.forDaoExceptGetterAndSetter()",
+            throwing = "exception"
+    )
+    public void afterThrowingFindAccountsAdvice(JoinPoint joinPoint, Throwable exception) {
+
+        System.out.println(">>>>>>>>>>> EXECUTING @AfterThrowing on method: " + joinPoint.getSignature().toShortString());
+        System.out.println(">>>>>>>>>>> Exception: " + exception);
+
+    }
 }
