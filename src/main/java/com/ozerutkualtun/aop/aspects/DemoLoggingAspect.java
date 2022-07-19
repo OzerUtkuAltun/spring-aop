@@ -118,7 +118,7 @@ public class DemoLoggingAspect {
 
 
     @Around(
-            "execution(* com.ozerutkualtun.aop.service.TrafficFortuneService.getFortune())"
+            "execution(* com.ozerutkualtun.aop.service.TrafficFortuneService.getFortune(..))"
     ) // around @Before + @After olarak düşünülebilir. Data'ya erişilebilir. Target object buradan tetiklenebilir.
     public Object aroundGetFortune(
             ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
@@ -128,8 +128,15 @@ public class DemoLoggingAspect {
 
         Long begin = System.currentTimeMillis();
 
-        // execute target method
-        Object result = proceedingJoinPoint.proceed();
+
+        Object result = null;
+
+        try {
+            result = proceedingJoinPoint.proceed();
+        } catch (Exception ex) {
+            logger.warning(ex.getMessage());
+            result = "major accident. But no worries, your private chopper is on the way.";
+        }
 
         Long end = System.currentTimeMillis();
         logger.info(">>>>>>>>>>> Duration: " + (end-begin)/1000 + " seconds");

@@ -1,16 +1,14 @@
 package com.ozerutkualtun.aop;
 
 import com.ozerutkualtun.aop.config.DemoConfig;
-
 import com.ozerutkualtun.aop.service.TrafficFortuneService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import java.util.List;
 import java.util.logging.Logger;
 
-public class AroundDemoApp {
+public class AroundExceptionDemoApp {
 
-    private static Logger logger = Logger.getLogger(AroundDemoApp.class.getName());
+    private static Logger logger = Logger.getLogger(AroundExceptionDemoApp.class.getName());
 
     public static void main(String[] args) {
 
@@ -20,7 +18,9 @@ public class AroundDemoApp {
 
         logger.info("\nMain Program: AroundDemoApp");
 
-        logger.info(trafficFortuneService.getFortune(false));
+        logger.info(trafficFortuneService.getFortune(true));
+
+        logger.info("Finished!");
 
         context.close();
 

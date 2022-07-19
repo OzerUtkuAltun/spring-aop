@@ -7,7 +7,11 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class TrafficFortuneService {
 
-    public String getFortune() {
+    public String getFortune(Boolean tripWire) throws RuntimeException{
+
+        if(tripWire) {
+            throw new RuntimeException("Runtime exception thrown from getFortune() method.");
+        }
 
         try {
             TimeUnit.SECONDS.sleep(5);
