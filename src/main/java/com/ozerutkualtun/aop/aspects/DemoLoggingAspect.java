@@ -68,16 +68,24 @@ public class DemoLoggingAspect {
     @Pointcut("execution(* com.ozerutkualtun.aop.dao.*.*(..))")  // 1. wildcard class name, 2.wildcard method name için
     public void forDaoPackage() {}  // genel expression bu şekilde. Metodun içine bir şey yazılmaz. Çağrılmak istenilen yerde metod adı ile ulaşılabilir.
 
+    @Pointcut("execution(* com.ozerutkualtun.aop.dao.*.get*(..))")
+    public void getter() {}
+
+    @Pointcut("execution(* com.ozerutkualtun.aop.dao.*.set*(..))")
+    public void setter() {}
+
+    @Pointcut("forDaoPackage() && !(getter() || setter())")
+    public void forDaoExceptGetterAndSetter() {}
 
 
-    @Before("forDaoPackage()")
+    @Before("forDaoExceptGetterAndSetter()")
     public void beforeAddAccountAdvice() {
 
         System.out.println("\n>>>>>>>>>>>>>>>>>>>EXECUTING @Before advice");
     }
 
 
-    @Before("forDaoPackage()")
+    @Before("forDaoExceptGetterAndSetter()")
     public void performAPIAnalytics() {
 
         System.out.println(">>>>>>>>>>>>>>>>>>>EXECUTING API ANALYTICS on @Before advice");

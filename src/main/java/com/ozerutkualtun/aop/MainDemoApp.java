@@ -18,6 +18,9 @@ public class MainDemoApp {
 
         accountDao.addAccount();
 
+        accountDao.setServiceCode("1245");
+        accountDao.getServiceCode();
+
         membershipDao.addAccount(new Account(), true);
 
         context.close();
