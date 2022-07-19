@@ -134,8 +134,13 @@ public class DemoLoggingAspect {
         try {
             result = proceedingJoinPoint.proceed();
         } catch (Exception ex) {
-            logger.warning(ex.getMessage());
-            result = "major accident. But no worries, your private chopper is on the way.";
+            System.out.println("@Around advice: We have a problem " + ex);
+
+            // Burada iki seçeneğimiz var. Ya exceptionu burada handle edebiliriz (önceki commitdeki gibi)
+            // ya da bize gelen exceptionu yeniden fırlatabiliriz.
+
+            // rethrow the exception
+            throw ex;
         }
 
         Long end = System.currentTimeMillis();
