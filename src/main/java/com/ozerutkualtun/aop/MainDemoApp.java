@@ -16,12 +16,12 @@ public class MainDemoApp {
 
         MembershipDao membershipDao = context.getBean("membershipDao", MembershipDao.class);
 
-        accountDao.addAccount();
+//        accountDao.addAccount();
+//
+//        accountDao.setServiceCode("1245");
+//        accountDao.getServiceCode();
 
-        accountDao.setServiceCode("1245");
-        accountDao.getServiceCode();
-
-        membershipDao.addAccount(new Account(), true);
+        membershipDao.addAccount(new Account("Özer Utku Altun", "oua@mail.com"), true);
 
         context.close();
     }
