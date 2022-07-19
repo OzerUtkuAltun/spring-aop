@@ -13,4 +13,12 @@ public class Account {
 
     private String name;
     private String email;
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

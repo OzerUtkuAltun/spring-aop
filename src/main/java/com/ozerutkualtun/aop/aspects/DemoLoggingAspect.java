@@ -1,9 +1,14 @@
 package com.ozerutkualtun.aop.aspects;
 
+import com.ozerutkualtun.aop.model.Account;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Aspect
 @Component
@@ -72,4 +77,16 @@ public class DemoLoggingAspect {
 
         System.out.println("\n>>>>>>>>>>>>>>>>>>>EXECUTING @Before advice - Demo Logging Aspect (Order 1)");
     }
+
+    @AfterReturning(
+            pointcut = "com.ozerutkualtun.aop.aspects.AopExpressions.forDaoExceptGetterAndSetter()",
+            returning = "result")   // afterReturning metod başarıyla çalıştıktan sonra tetiklenir.
+    public void afterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> result) { // result = returningteki value
+
+        System.out.println("\n>>>>>>>>EXECUTING @AfteReturning on method: " + joinPoint.getSignature().toShortString());
+        System.out.println("\n>>>>>>>>RESULT is: " + result);
+
+
+    }
+
 }
