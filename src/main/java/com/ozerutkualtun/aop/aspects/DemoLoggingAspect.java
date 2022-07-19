@@ -2,10 +2,7 @@ package com.ozerutkualtun.aop.aspects;
 
 import com.ozerutkualtun.aop.model.Account;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -107,5 +104,11 @@ public class DemoLoggingAspect {
         System.out.println(">>>>>>>>>>> EXECUTING @AfterThrowing on method: " + joinPoint.getSignature().toShortString());
         System.out.println(">>>>>>>>>>> Exception: " + exception);
 
+    }
+
+    // Not: @After'ı finally bloğu gibi düşünebilirsin. Exception olsa da olmasa da çalışacaktır.
+    @After("com.ozerutkualtun.aop.aspects.AopExpressions.forDaoExceptGetterAndSetter()")
+    public void afterFinallyFindAccountsAdvice(JoinPoint joinPoint) {
+        System.out.println(">>>>>>>>>>> EXECUTING @After(finally) advice on method: " + joinPoint.getSignature().toShortString());
     }
 }
