@@ -9,11 +9,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 @Aspect
 @Component
 @Order(1)
 public class DemoLoggingAspect {
+
+    private Logger logger = Logger.getLogger(DemoLoggingAspect.class.getName());
 
     /*
      pointcut expression language:
@@ -121,7 +124,7 @@ public class DemoLoggingAspect {
             ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
 
         // print out method we are advising on
-        System.out.println(">>>>>>>>>>> EXECUTING @After(finally) advice on method: " + proceedingJoinPoint.getSignature().toShortString());
+        logger.info(">>>>>>>>>>> EXECUTING @After(finally) advice on method: " + proceedingJoinPoint.getSignature().toShortString());
 
         Long begin = System.currentTimeMillis();
 
@@ -129,7 +132,7 @@ public class DemoLoggingAspect {
         Object result = proceedingJoinPoint.proceed();
 
         Long end = System.currentTimeMillis();
-        System.out.println(">>>>>>>>>>> Duration: " + (end-begin)/1000 + " seconds");
+        logger.info(">>>>>>>>>>> Duration: " + (end-begin)/1000 + " seconds");
 
         return result;
     }
