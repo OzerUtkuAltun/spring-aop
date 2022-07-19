@@ -9,6 +9,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Locale;
 
 @Aspect
 @Component
@@ -86,6 +87,13 @@ public class DemoLoggingAspect {
         System.out.println("\n>>>>>>>>EXECUTING @AfteReturning on method: " + joinPoint.getSignature().toShortString());
         System.out.println("\n>>>>>>>>RESULT is: " + result);
 
+
+        // post processing data:
+
+        result.forEach(account -> account.setName(account.getName().toUpperCase(Locale.ROOT)));
+
+        // BURADA YAPMIŞ OLDUĞUMUZ İŞLEMDEN DOLAYI accountDao altındaki findAccounts metodu çağrıldığında bizim burada manipule ettiğimiz data return edilecektir.
+        // Bu yaklaşımın kullanılması pek önerilmez, çünkü code refactoring kısmında trace edilmesi zordur.
 
     }
 
