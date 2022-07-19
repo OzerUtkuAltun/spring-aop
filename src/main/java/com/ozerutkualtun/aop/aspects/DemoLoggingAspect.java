@@ -2,6 +2,7 @@ package com.ozerutkualtun.aop.aspects;
 
 import com.ozerutkualtun.aop.model.Account;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -110,5 +111,26 @@ public class DemoLoggingAspect {
     @After("com.ozerutkualtun.aop.aspects.AopExpressions.forDaoExceptGetterAndSetter()")
     public void afterFinallyFindAccountsAdvice(JoinPoint joinPoint) {
         System.out.println(">>>>>>>>>>> EXECUTING @After(finally) advice on method: " + joinPoint.getSignature().toShortString());
+    }
+
+
+    @Around(
+            "execution(* com.ozerutkualtun.aop.service.TrafficFortuneService.getFortune())"
+    ) // around @Before + @After olarak düşünülebilir. Data'ya erişilebilir. Target object buradan tetiklenebilir.
+    public Object aroundGetFortune(
+            ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+
+        // print out method we are advising on
+        System.out.println(">>>>>>>>>>> EXECUTING @After(finally) advice on method: " + proceedingJoinPoint.getSignature().toShortString());
+
+        Long begin = System.currentTimeMillis();
+
+        // execute target method
+        Object result = proceedingJoinPoint.proceed();
+
+        Long end = System.currentTimeMillis();
+        System.out.println(">>>>>>>>>>> Duration: " + (end-begin)/1000 + " seconds");
+
+        return result;
     }
 }
