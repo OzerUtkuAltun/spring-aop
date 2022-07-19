@@ -13,5 +13,7 @@ public class MainDemoApp {
         AccountDao accountDao = context.getBean("accountDao", AccountDao.class);
 
         accountDao.addAccount();
+
+        context.close();
     }
 }
