@@ -2,6 +2,7 @@ package com.ozerutkualtun.aop.aspects;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -55,13 +56,30 @@ public class DemoLoggingAspect {
 
     @Before("execution(* com.ozerutkualtun.aop.dao.*.*(..))")
 
+
+    ----------------------------
+
+    @PointCut expressions: bir pointcut expressionu birden fazla aspectte kullanmak istediğimizde tek tek
+    copy paste yapmak iyi ve doğru bir çözüm değil. Bunun için @Pointcut tanımlayabilir ve tanımladığımız
+    pointcutları logic işlemlerde de kullanabiliriz.
+
    */
 
-    //   @Before("execution(public void addAccount())") // içerideki expression = pointcut
-    //   @Before("execution(* addAccount(com.ozerutkualtun.aop.model.Account, ..))") // return type'ı ne olursa olsun ilk parametresi account olan addAccount metodundan önce çalışsın.
-    @Before("execution(* com.ozerutkualtun.aop.dao.*.*(..))")
+    @Pointcut("execution(* com.ozerutkualtun.aop.dao.*.*(..))")  // 1. wildcard class name, 2.wildcard method name için
+    public void forDaoPackage() {}  // genel expression bu şekilde. Metodun içine bir şey yazılmaz. Çağrılmak istenilen yerde metod adı ile ulaşılabilir.
+
+
+
+    @Before("forDaoPackage()")
     public void beforeAddAccountAdvice() {
 
         System.out.println("\n>>>>>>>>>>>>>>>>>>>EXECUTING @Before advice");
+    }
+
+
+    @Before("forDaoPackage()")
+    public void performAPIAnalytics() {
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>EXECUTING API ANALYTICS on @Before advice");
     }
 }
